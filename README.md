@@ -12,4 +12,4 @@ Para consultar y ejecutar los ejemplos, descargar el proyecto (botón de descarg
 un servidor web. 
 
 # Slides de la charla
-Para ver y descargar la presentación, acceder a este enlace: <a href="#">presentación en slideshare</a>.
+Para ver y descargar la presentación, acceder a este enlace: <a href="http://www.slideshare.net/sema_hkd/carrera-de-fondo-la-continuada-lucha-de-angularjs-codemotion-2015">presentación en slideshare</a>.
