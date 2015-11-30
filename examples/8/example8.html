@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html ng-app="ExampleApp1">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>CodeMotion 2015</title>
+      <link href='./../../css/bootstrap.css' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Carrera de fondo para AngularJS - CodeMotion 2015</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="padding: 60px 15px 0;">
+      <div class="row">
+        <div id="menu" class="hidden-xs hidden-sm col-md-3">
+          <ul class="nav nav-pills nav-stacked" style="margin-top: 2rem">
+            <li><a href="../../index.html">Inicio</a></li>
+            <li><a href="../1/example1.html">Ejemplo 1</a></li>
+            <li><a href="../2/example2.html">Ejemplo 2</a></li>
+            <li><a href="../3/example3.html">Ejemplo 3</a></li>
+            <li><a href="../4/example4.html">Ejemplo 4</a></li>
+            <li><a href="../5/example5.html">Ejemplo 5</a></li>
+            <li><a href="../6/example6.html">Ejemplo 6</a></li>
+            <li><a href="../7/example7.html">Ejemplo 7</a></li>
+            <li class="active"><a href="../8/example8.html">Ejemplo 8</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div class="row">
+            <h1>Ejemplo 8: <i>Servicio, petición AJAX y promesa</i></h1>
+            <hr style="line-height:10px" />
+            <div ng-controller="ctrl1">
+              <h1>Peticiones AJAX y Promesas</h1>
+              <p>Introduzca una ciudad para buscar la información metereológica.</p>
+              <input type="text" ng-model="city" placeholder="Introduzca una ciudad" size="25" />
+              <button ng-click="search()">Buscar</button>
+              <button ng-click="reset()">Resetear</button>
+
+              <div ng-if="weatherData" style="margin-top:18px">
+                <p>Información metereológica de {{ city }}</p>
+                <ul>
+                  <li><strong>Temperatura</strong>: {{ weatherData.main.temp }}</li>                
+                  <li><strong>Presión</strong>: {{ weatherData.main.pressure }}</li>                
+                  <li><strong>Humedad</strong>: {{ weatherData.main.humidity }}</li>                
+                  <li><strong>Coordenadas</strong>: {{ weatherData.coord.lon }}, {{ weatherData.coord.lat }}</li>                
+                  <li><strong>Viento</strong>: {{ weatherData.wind.speed }}</li>                
+                  <li><strong>Cielo</strong>: {{ weatherData.weather[0].description }}</li>                
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <h3>Descripción</h3>
+            <p>Este ejemplo muestra:</p>
+            <ul>
+              <li>Cómo invocar a un servicio desde un controlador.</li>
+              <li>Cómo definir una constante.</li>
+              <li>Una petición AJAX a un servicio API Rest y promesa.</li>
+              <li>Mostrar los campos cuando se reciba información.</li>
+              <li>Resetear la búsqueda.</li>
+            </ul>
+            <br />
+            <pre>
+            <code class="js">
+            var app = angular.module('ExampleApp1', []);
+            app
+              .constant('APIKEY', '0596fe0573fa9daa94c2912e5e383ed3')
+
+              .controller('ctrl1', ['$scope', 'UserService', function($scope, UserService) { 
+                $scope.city = '';
+                
+                $scope.search = function() {
+                  if($scope.city) {
+                    UserService.get($scope.city).then(
+                      function(data) {
+                        $scope.weatherData = data;
+                      }, function() {
+                        alert('Error en la llamada');
+                      });
+                  } else {
+                    alert('Debe introducir un valor');
+                  }
+                }
+
+                $scope.reset = function() {
+                  $scope.weatherData = undefined;
+                }
+              }])
+
+              .factory('UserService', function($q, $http, APIKEY) {
+                function callToBackEnd(city) {
+                  var URL = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=';
+                  var defer = $q.defer();
+                  $http.get(URL + APIKEY)
+                    .success(function(data) {
+                      defer.resolve(data);
+                    }).error(function(error) {
+                      defer.reject(error);
+                    });
+                  return defer.promise;
+                }
+
+                return {
+                  get : callToBackEnd
+                }
+              });
+            </code>
+            </pre>
+
+            <p>En la plantilla (vista), insertamos: </p>
+            <pre>
+            <code class="html">
+            &lt;div ng-controller="ctrl1"&gt;
+              &lt;h1&gt;Peticiones AJAX y Promesas&lt;/h1&gt;
+              &lt;input type="text" ng-model="city" placeholder="Introduzca una ciudad" size="25" /&gt;
+              &lt;button ng-click="search()"&gt;Buscar&lt;/button&gt;
+              &lt;button ng-click="reset()"&gt;Buscar&lt;/button&gt;
+
+              &lt;div ng-if="weatherData" style="margin-top:18px"&gt;
+                &lt;p&gt;Información metereológica de &#123; &#123; city &#125; &#125;&lt;/p&gt;
+                &lt;ul&gt;
+                  &lt;li&gt;&lt;strong&gt;Temperatura&lt;/strong&gt;: &#123; &#123; weatherData.main.temp &#125; &#125;&lt;/li&gt;                
+                  &lt;li&gt;&lt;strong&gt;Presión&lt;/strong&gt;: &#123; &#123; weatherData.main.pressure &#125; &#125;&lt;/li&gt;                
+                  &lt;li&gt;&lt;strong&gt;Humedad&lt;/strong&gt;: &#123; &#123; weatherData.main.humidity &#125; &#125;&lt;/li&gt;                
+                  &lt;li&gt;&lt;strong&gt;Coordenadas&lt;/strong&gt;: 
+                    &#123; &#123; weatherData.coord.lon &#125; &#125;, &#123; &#123; weatherData.coord.lat &#125; &#125;
+                  &lt;/li&gt;                
+                  &lt;li&gt;&lt;strong&gt;Viento&lt;/strong&gt;: &#123; &#123; weatherData.wind.speed &#125; &#125;&lt;/li&gt;                
+                  &lt;li&gt;&lt;strong&gt;Cielo&lt;/strong&gt;: &#123; &#123; weatherData.weather[0].description &#125; &#125;&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+            </code>
+            </pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../../js/vendor/angular.js"></script>
+    <script src="../../js/vendor/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      var app = angular.module('ExampleApp1', []);
+      app
+        .value('APIKEY', '0596fe0573fa9daa94c2912e5e383ed3')
+
+        .controller('ctrl1', ['$scope', 'UserService', function($scope, UserService) { 
+          $scope.city = '';
+          
+          $scope.search = function() {
+            if($scope.city) {
+              UserService.get($scope.city).then(
+                function(data) {
+                  $scope.weatherData = data;
+                }, function() {
+                  alert('Error en la llamada');
+                });
+            } else {
+              alert('Debe introducir un valor');
+            }
+          }
+
+          $scope.reset = function() {
+            $scope.weatherData = undefined;
+          }
+        }])
+
+        .factory('UserService', function($q, $http, APIKEY) {
+          function callToBackEnd(city) {
+            var URL = 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=';
+            var defer = $q.defer();
+            $http.get(URL + APIKEY)
+              .success(function(data) {
+                defer.resolve(data);
+              }).error(function(error) {
+                defer.reject(error);
+              });
+            return defer.promise;
+          }
+
+          return {
+            get : callToBackEnd
+          }
+        });
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html ng-app="ExampleApp1">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>CodeMotion 2015</title>
+      <!--<link href='http://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+      <link href='./css/basics.css' rel='stylesheet' type='text/css'>-->
+      <link href='./../../css/bootstrap.css' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Carrera de fondo para AngularJS - CodeMotion 2015</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="padding: 60px 15px 0;">
+      <div class="row">
+        <div id="menu" class="hidden-xs hidden-sm col-md-3">
+          <ul class="nav nav-pills nav-stacked" style="margin-top: 2rem">
+            <li><a href="../../index.html">Inicio</a></li>
+            <li><a href="../1/example1.html">Ejemplo 1</a></li>
+            <li><a href="../2/example2.html">Ejemplo 2</a></li>
+            <li><a href="../3/example3.html">Ejemplo 3</a></li>
+            <li><a href="../4/example4.html">Ejemplo 4</a></li>
+            <li><a href="../5/example5.html">Ejemplo 5</a></li>
+            <li class="active"><a href="../6/example6.html">Ejemplo 6</a></li>
+            <li><a href="../7/example7.html">Ejemplo 7</a></li>
+            <li><a href="../8/example8.html">Ejemplo 8</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div class="row">
+            <h1>Ejemplo 6: <i>Filtro + directiva</i></h1>
+            <hr style="line-height:10px" />
+            <div ng-controller="ctrl1">
+              <h1>Lenguajes de programación</h1>
+              <label>Filtro: </label><input ng-model="filterCriteria" />
+              <ul>
+                <li ng-repeat="lang in languages | filter:filterCriteria">
+                  {{$index}}) Lenguaje -> {{lang.name}} :: [{{lang.layer}}]
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <h3>Descripción</h3>
+            <p>Cuando utilizamos la directiva <code>ng-repeat</code> podemos aplicar un filtro sobre la tabla a modo de filtro.</p>
+            <p>Dicho filtro será alimentado por un campo de texto; este texto será el criterio de búsqueda sobre los campos de la tabla
+                (que podrá ser sobre una o todas las columnas; en el ejemplo, toda la tabla).</p>
+            <pre>
+              <code class="js">
+                var app = angular.module('ExampleApp1', []);
+                app
+                  .controller('ctrl1', function($scope) { 
+                    $scope.languages = [
+                      { name: 'Java', layer : 'BE' },
+                      { name: 'Go', layer : 'BE' },
+                      { name: 'JavaScript', layer : 'FE' },
+                      { name: 'Scala', layer : 'BE' },
+                      { name: 'Python', layer : 'BE' },
+                      { name: 'Clojure', layer : 'BE' },
+                      { name: 'Ruby', layer : 'BE' }
+                    ];
+                  });
+              </code>
+            </pre>
+
+            <p>En la plantilla (vista), insertamos: </p>
+            <pre>
+              <code class="html">
+                &lt;div ng-controller="ctrl1"&gt;
+                  &lt;h1&gt;Lenguajes de programación&lt;/h1&gt;
+                  &lt;label&gt;Filtro: &lt;/label&gt;&lt;input ng-model="filterCriteria" /&gt;
+                  &lt;ul&gt;
+                    &lt;li ng-repeat="lang in languages | filter:filterCriteria"&gt;
+                      &#123; &#123;$index&#125; &#125;) Lenguaje -&gt; &#123; &#123;lang.name&#125; &#125; :: [&#123; &#123;lang.layer&#125; &#125;]
+                    &lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/div&gt;
+              </code>
+            </pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../../js/vendor/angular.js"></script>
+    <script src="../../js/vendor/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      var app = angular.module('ExampleApp1', []);
+      app
+        .controller('ctrl1', function($scope) { 
+          $scope.languages = [
+            { name: 'Java', layer : 'BE' },
+            { name: 'Go', layer : 'BE' },
+            { name: 'JavaScript', layer : 'FE' },
+            { name: 'Scala', layer : 'BE' },
+            { name: 'Python', layer : 'BE' },
+            { name: 'Clojure', layer : 'BE' },
+            { name: 'Ruby', layer : 'BE' }
+          ];
+        });
+    </script>
+  </body>
+</html>
+

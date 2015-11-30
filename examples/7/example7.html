@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html ng-app="ExampleApp1">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>CodeMotion 2015</title>
+      <!--<link href='http://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+      <link href='./css/basics.css' rel='stylesheet' type='text/css'>-->
+      <link href='./../../css/bootstrap.css' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Carrera de fondo para AngularJS - CodeMotion 2015</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="padding: 60px 15px 0;">
+      <div class="row">
+        <div id="menu" class="hidden-xs hidden-sm col-md-3">
+          <ul class="nav nav-pills nav-stacked" style="margin-top: 2rem">
+            <li><a href="../../index.html">Inicio</a></li>
+            <li><a href="../1/example1.html">Ejemplo 1</a></li>
+            <li><a href="../2/example2.html">Ejemplo 2</a></li>
+            <li><a href="../3/example3.html">Ejemplo 3</a></li>
+            <li><a href="../4/example4.html">Ejemplo 4</a></li>
+            <li><a href="../5/example5.html">Ejemplo 5</a></li>
+            <li><a href="../6/example6.html">Ejemplo 6</a></li>
+            <li class="active"><a href="../7/example7.html">Ejemplo 7</a></li>
+            <li><a href="../8/example8.html">Ejemplo 8</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div class="row">
+            <h1>Ejemplo 7: <i>Servicios</i></h1>
+            <hr style="line-height:10px" />
+            <div ng-controller="ctrl1">
+              <h1>Calculador CodeMotion 2015</h1>
+              <label>Operando 1:</label><input type="number" ng-model="number1" />
+              <label>Operando 2:</label><input type="number" ng-model="number2" />
+              <h3>Resultado: {{result}}</h3>
+              <h3>Suma automática: {{number1 + number2}}</h3>
+              <button ng-click="sum()">Suma</button> 
+              <button ng-click="mult(number1, number2)">Multiplica</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <h3>Descripción</h3>
+            <p>Se define un servicio para encapsular la lógica común o específica; en este caso el servicio simula dos
+                operaciones básicas de una calculadora: suma y multiplicación.</p>
+            <p>De las dos funcionalidades implementadas (expuestas a través de una factoría), el resultado del cálculo
+                se obtendrá.
+                <ul>
+                  <li><strong>Resultado</strong>: se invoca al servicio cuando se pulsa sobre el botón.</li>
+                  <li>
+                    <strong>Suma automática</strong>: aprovechando la característica del <em>two-way data-binding</em>, la
+                      operación de multiplicación se realiza y actualiza de manera automática, sin necesidad de clicar
+                      ningún botón manualmente.
+                  </li>
+                </ul>
+            </p>
+            <pre>
+              <code class="js">
+                var app = angular.module('ExampleApp1', []);
+                app
+                  .controller('ctrl1', ['$scope', 'CalcService', function($scope, calculator) { 
+                    $scope.sum = function() {
+                      $scope.result = calculator.add($scope.number1, $scope.number2);
+                    }
+
+                    $scope.mult = function(x, y) {
+                      $scope.result = calculator.multiply(x, y);
+                    }
+                  }])
+                  .factory('CalcService', function() {
+                    return {
+                      add : function(a, b) { return a + b; },
+                      multiply : function(a, b) { return a * b; }
+                    }
+                  });  
+              </code>
+            </pre>
+
+            <p>En la plantilla (vista), insertamos: </p>
+            <pre>
+              <code class="html">
+                &lt;div ng-controller="ctrl1"&gt;
+                  &lt;h1&gt;Calculador CodeMotion 2015&lt;/h1&gt;
+                  &lt;label&gt;Operando 1:&lt;/label&gt;&lt;input type="number" ng-model="number1" /&gt;
+                  &lt;label&gt;Operando 2:&lt;/label&gt;&lt;input type="number" ng-model="number2" /&gt;
+                  &lt;h3&gt;Resultado: &#123; &#123;result&#125; &#125;&lt;/h3&gt;
+                  &lt;h3&gt;Suma automática: &#123; &#123;number1 + number2&#125; &#125;&lt;/h3&gt;
+                  &lt;button ng-click="sum()"&gt;Suma&lt;/button&gt; 
+                  &lt;button ng-click="mult(number1, number2)"&gt;Multiplica&lt;/button&gt;
+                &lt;/div&gt;
+              </code>
+            </pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../../js/vendor/angular.js"></script>
+    <script src="../../js/vendor/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      var app = angular.module('ExampleApp1', []);
+      app
+        .controller('ctrl1', ['$scope', 'CalcService', function($scope, calculator) { 
+          $scope.sum = function() {
+            $scope.result = calculator.add($scope.number1, $scope.number2);
+          }
+
+          $scope.mult = function(x, y) {
+            $scope.result = calculator.multiply(x, y);
+          }
+        }])
+        .factory('CalcService', function() {
+          return {
+            add : function(a, b) { return a + b; },
+            multiply : function(a, b) { return a * b; }
+          }
+        });
+    </script>
+  </body>
+</html>
+

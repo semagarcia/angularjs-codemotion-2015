@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html ng-app="ExampleApp3">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>CodeMotion 2015</title>
+      <link href='./../../css/bootstrap.css' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Carrera de fondo para AngularJS - CodeMotion 2015</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="padding: 60px 15px 0;">
+      <div class="row">
+        <div id="menu" class="hidden-xs hidden-sm col-md-3">
+          <ul class="nav nav-pills nav-stacked" style="margin-top: 2rem">
+            <li><a href="../../index.html">Inicio</a></li>
+            <li><a href="../1/example1.html">Ejemplo 1</a></li>
+            <li><a href="../2/example2.html">Ejemplo 2</a></li>
+            <li class="active"><a href="../3/example3.html">Ejemplo 3</a></li>
+            <li><a href="../4/example4.html">Ejemplo 4</a></li>
+            <li><a href="../5/example5.html">Ejemplo 5</a></li>
+            <li><a href="../6/example6.html">Ejemplo 6</a></li>
+            <li><a href="../7/example7.html">Ejemplo 7</a></li>
+            <li><a href="../8/example8.html">Ejemplo 8</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div class="row">
+            <h1>Ejemplo 3: <i>$rootScope, $scope y herencia</i></h1>
+            <hr style="line-height:10px" />
+            <div class="highlightBorders" ng-controller="ctrl1">
+              <p>Global >> {{ globalValue }}</p>
+              <p>Text >> {{ hello }}</p>
+              <input ng-model="hello" />
+            </div>
+
+            <hr style="width:75%" />
+
+            <div class="highlightBorders" ng-controller="ctrl2">
+              <label>Ctrl2: </label> <input ng-model="hello" />
+              <p>Text >> {{ hello }}</p>
+              <p>Global >> {{ globalValue }}</p>
+              <hr style="margin-left:20px; width:50%" />
+              <div class="highlightChildBorders" ng-controller="innerCtrl3">
+                <p>Specific >> {{ specificCtrlVariable }}</p>
+                <p>$parent >> {{ $parent.globalValue }}</p>
+                <p>Text >> {{ hello }}</p>
+                <label>Hijo: </label><input ng-model="hello" />
+                <label>Padre (ctrl2): </label><input ng-model="$parent.hello" />
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <h3>Descripción</h3>
+            <p>Podemos definir varios ámbitos de ejecución (scope) sobre los que podrán actuar los controladores.</p>
+            <p>Cuando una vista referencia a una variable, Angular buscará dicha variable en el ámbito del controlador
+                sobre el que se encuentra englobado (etiqueta <em>ng-controller</em>).
+            </p>
+            <pre>
+              <code class="js">
+                angular.module('ExampleApp3', [])
+                  .controller('ctrl1', function($rootScope, $scope) { 
+                    $rootScope.globalValue = 9;
+                    $scope.hello = "I'm controller 1";
+                  })
+                  .controller('ctrl2', ['$scope', function($scope) {
+                    $scope.hello = "I'm controller 2";
+                  }])
+                  .controller('innerCtrl3', function($rootScope, $scope) { 
+                    $scope.specificCtrlVariable = $rootScope.globalValue;
+                    $scope.hello = "I'm controller 3";
+                  }); 
+              </code>
+            </pre>
+
+            <p>En la plantilla (vista), insertamos: </p>
+            <pre>
+              <code class="html">
+                &lt;div class="highlightBorders" ng-controller="ctrl1"&gt;
+                  &lt;p&gt;Global &gt;&gt; &#123; &#123; globalValue &#125; &#125;&lt;/p&gt;
+                  &lt;p&gt;Text &gt;&gt; &#123; &#123; hello &#125; &#125;&lt;/p&gt;
+                  &lt;input ng-model="hello" /&gt;
+                &lt;/div&gt;
+
+                &lt;hr style="width:75%" /&gt;
+
+                &lt;div class="highlightBorders" ng-controller="ctrl2"&gt;
+                  &lt;label&gt;Ctrl2: &lt;/label&gt; &lt;input ng-model="hello" /&gt;
+                  &lt;p&gt;Text &gt;&gt; &#123; &#123; hello &#125; &#125;&lt;/p&gt;
+                  &lt;p&gt;Global &gt;&gt; &#123; &#123; globalValue &#125; &#125;&lt;/p&gt;
+                  &lt;hr style="margin-left:20px; width:50%" /&gt;
+                  &lt;div class="highlightChildBorders" ng-controller="innerCtrl3"&gt;
+                    &lt;p&gt;Specific &gt;&gt; &#123; &#123; specificCtrlVariable &#125; &#125;&lt;/p&gt;
+                    &lt;p&gt;$parent &gt;&gt; &#123; &#123; $parent.globalValue &#125; &#125;&lt;/p&gt;
+                    &lt;p&gt;Text &gt;&gt; &#123; &#123; hello &#125; &#125;&lt;/p&gt;
+                    &lt;label&gt;Hijo: &lt;/label&gt;&lt;input ng-model="hello" /&gt;
+                    &lt;label&gt;Padre (ctrl2): &lt;/label&gt;&lt;input ng-model="$parent.hello" /&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              </code>
+            </pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../../js/vendor/angular.js"></script>
+    <script src="../../js/vendor/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      var app = angular.module('ExampleApp3', []);
+      app
+        .controller('ctrl1', function($rootScope, $scope) { 
+          $rootScope.globalValue = 9;
+          $scope.hello = "I'm controller 1";
+        })
+        .controller('ctrl2', ['$scope', function($scope) {
+          $scope.hello = "I'm controller 2";
+        }])
+        .controller('innerCtrl3', function($rootScope, $scope) { 
+          $scope.specificCtrlVariable = $rootScope.globalValue;
+          $scope.hello = "I'm controller 3";
+        });
+    </script>
+  </body>
+</html>

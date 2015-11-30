@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="SourceCodePresenter">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>CodeMotion 2015</title>
+      <!--<link href='http://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+      <link href='./css/basics.css' rel='stylesheet' type='text/css'>-->
+      <link href='./css/bootstrap.css' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+  </head>
+  <body ng-controller="mainController">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Carrera de fondo para AngularJS - CodeMotion 2015</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="padding: 60px 15px 0;">
+      <div class="row">
+        <div id="menu" class="hidden-xs hidden-sm col-md-3">
+          <ul class="nav nav-pills nav-stacked" style="margin-top: 2rem">
+            <li class="active"><a href="./index.html">Inicio</a></li>
+            <li><a href="examples/1/example1.html">Ejemplo 1</a></li>
+            <li><a href="examples/2/example2.html">Ejemplo 2</a></li>
+            <li><a href="examples/3/example3.html">Ejemplo 3</a></li>
+            <li><a href="examples/4/example4.html">Ejemplo 4</a></li>
+            <li><a href="examples/5/example5.html">Ejemplo 5</a></li>
+            <li><a href="examples/6/example6.html">Ejemplo 6</a></li>
+            <li><a href="examples/7/example7.html">Ejemplo 7</a></li>
+            <li><a href="examples/8/example8.html">Ejemplo 8</a></li>
+          </ul>
+        </div>
+
+        <div id="examples" class="col-xs-12 col-md-9">
+          <div class="row">
+            <img width="100%" src="./img/codemotion.png" />
+          </div>
+          <p style="padding-top:18px">Ejemplos desarrollados para el CodeMotion 2015.</p>
+          <div><h3>Contenido de los ejemplos:</h3></div>
+          <div class="row">
+            <ol>
+              <li><strong><i>Hello CodeMotion:</i></strong> expresión básica y uso del <code>$scope</code>.</li>
+              <li><strong><i>Two data-binding: </i></strong>uso de la directiva <code>ng-model</code>.</li>
+              <li><strong><i>Ámbitos de ejecución: </i></strong><code>$rootScope, $scope</code> y herencia.</li>
+              <li><strong><i>Directivas básicas: </i></strong><code>ng-repeat, ng-if, ng-show</code>.</li>
+              <li><strong><i>Directiva compleja: </i></strong>creando una directiva propia y personalizada.</li>
+              <li><strong><i>Directiva y filtro: </i></strong>cómo combinar una directiva y un filtro para una colección .</li>
+              <li><strong><i>Servicios: </i></strong>creando un servicio básico para implementar una calculadora muy básica.</li>
+              <li><strong><i>Llamada AJAX: </i></strong>implementación de una llamada a backend e implementación de promesas.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="js/vendor/angular.js"></script>
+    <script src="js/vendor/angular-ui-router.js"></script>
+  </body>
+</html>

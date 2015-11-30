@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html ng-app="ExampleApp1">
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>CodeMotion 2015</title>
+      <link href='./../../css/bootstrap.css' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/default.min.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Carrera de fondo para AngularJS - CodeMotion 2015</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="padding: 60px 15px 0;">
+      <div class="row">
+        <div id="menu" class="hidden-xs hidden-sm col-md-3">
+          <ul class="nav nav-pills nav-stacked" style="margin-top: 2rem">
+            <li><a href="../../index.html">Inicio</a></li>
+            <li><a href="../1/example1.html">Ejemplo 1</a></li>
+            <li><a href="../2/example2.html">Ejemplo 2</a></li>
+            <li><a href="../3/example3.html">Ejemplo 3</a></li>
+            <li class="active"><a href="../4/example4.html">Ejemplo 4</a></li>
+            <li><a href="../5/example5.html">Ejemplo 5</a></li>
+            <li><a href="../6/example6.html">Ejemplo 6</a></li>
+            <li><a href="../7/example7.html">Ejemplo 7</a></li>
+            <li><a href="../8/example8.html">Ejemplo 8</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-9">
+          <div class="row">
+            <h1>Ejemplo 4: <i>ng-repeat y ng-if | show</i></h1>
+            <hr style="line-height:10px" />
+            <div ng-controller="ctrl1">
+              <h1>Lenguajes de programación</h1>
+              <input type="checkbox" ng-model="isLanguageListVisible" />
+              <span ng-if="!isLanguageListVisible">Mostrar lista</span>
+              <span ng-if="isLanguageListVisible">Ocultar lista</span>
+              <ul ng-show="isLanguageListVisible">
+                <li ng-repeat="lang in languages">
+                  {{$index}}) Lenguaje -> {{lang.name}} :: [{{lang.layer}}]
+                </li>
+              </ul>
+              <label>Nuevo lenguaje: </label><input ng-model="n" /><input ng-model="l" />
+              <button ng-click="add(n, l)">Añadir lenguaje</button>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="row">
+            <h3>Descripción</h3>
+            <h4>Mostrando colecciones</h4>
+            <p>Para imprimir una colección (array) utilizaremos una construcción "out-of-the-box" o <em>built-in</em>, la
+                directiva <code>ng-repeat</code>, cuyo funcionamiento es similar a <em>for-each</em>.</p>
+            <p>En el controlador expondremos una función (add) mediante la cual añadiremos un nuevo elemento a dicho array, 
+                tomando como entradas los dos input (nombre y capa).</p>
+            <p>Por último, se ha añadido también un flag que controlará la visibilidad del nodo del DOM sobre el que está
+                aplicado; en el ejemplo, mostramos u ocultamos toda la lista.</p>
+            <pre>
+              <code class="js">
+                var app = angular.module('ExampleApp4', []);
+                app
+                  .controller('ctrl1', function($scope) { 
+                    $scope.isLanguageListVisible = true;
+                    $scope.languages = [
+                      { name: 'Java', layer : 'BE' },
+                      { name: 'Go', layer : 'BE' },
+                      { name: 'JavaScript', layer : 'FE' },
+                      { name: 'Scala', layer : 'BE' },
+                      { name: 'Python', layer : 'BE' },
+                      { name: 'Clojure', layer : 'BE' },
+                      { name: 'Ruby', layer : 'BE' }
+                    ];
+
+                    $scope.add = function(n, l) {
+                      $scope.languages.push({name:n, layer:l});
+                      $scope.n = '';
+                      $scope.l = '';
+                    }
+                  }); 
+              </code>
+            </pre>
+
+            <p>En la plantilla (vista), insertamos: </p>
+            <pre>
+              <code class="html">
+                &lt;div ng-controller="ctrl1"&gt;
+                  &lt;h1&gt;Lenguajes de programación&lt;/h1&gt;
+                  &lt;input type="checkbox" ng-model="isLanguageListVisible" /&gt;
+                  &lt;span ng-if="!isLanguageListVisible"&gt;Mostrar lista&lt;/span&gt;
+                  &lt;span ng-if="isLanguageListVisible"&gt;Ocultar lista&lt;/span&gt;
+                  &lt;ul ng-show="isLanguageListVisible"&gt;
+                    &lt;li ng-repeat="lang in languages"&gt;
+                      &#123; &#123;$index&#125; &#125;) Lenguaje -&gt; &#123; &#123;lang.name&#125; &#125; :: [&#123; &#123;lang.layer&#125; &#125;]
+                    &lt;/li&gt;
+                  &lt;/ul&gt;
+                  &lt;label&gt;Nuevo lenguaje: &lt;/label&gt;&lt;input ng-model="n" /&gt;&lt;input ng-model="l" /&gt;
+                  &lt;button ng-click="add(n, l)"&gt;Añadir lenguaje&lt;/button&gt;
+                &lt;/div&gt;
+              </code>
+            </pre>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../../js/vendor/angular.js"></script>
+    <script src="../../js/vendor/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      var app = angular.module('ExampleApp1', []);
+      app
+        .controller('ctrl1', function($scope) { 
+          $scope.isLanguageListVisible = true;
+          $scope.languages = [
+            { name: 'Java', layer : 'BE' },
+            { name: 'Go', layer : 'BE' },
+            { name: 'JavaScript', layer : 'FE' },
+            { name: 'Scala', layer : 'BE' },
+            { name: 'Python', layer : 'BE' },
+            { name: 'Clojure', layer : 'BE' },
+            { name: 'Ruby', layer : 'BE' }
+          ];
+
+          $scope.add = function(n, l) {
+            $scope.languages.push({name:n, layer:l});
+            $scope.n = '';
+            $scope.l = '';
+          }
+        });
+    </script>
+  </body>
+</html>
+
